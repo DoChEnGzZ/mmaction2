@@ -26,7 +26,7 @@ model = dict(
         average_clips='prob'))
 
 dataset_type = 'PoseDataset'
-ann_file = 'data/skeleton/gym_2d.pkl'
+ann_file = 'data/train.pkl'
 left_kp = [1, 3, 5, 7, 9, 11, 13, 15]
 right_kp = [2, 4, 6, 8, 10, 12, 14, 16]
 train_pipeline = [
@@ -137,3 +137,7 @@ param_scheduler = [
 optim_wrapper = dict(
     optimizer=dict(type='SGD', lr=0.2, momentum=0.9, weight_decay=0.0003),
     clip_grad=dict(max_norm=40, norm_type=2))
+
+# 每轮都保存权重，并且只保留最新的权重
+default_hooks = dict(
+    checkpoint=dict(type='CheckpointHook', interval=1, max_keep_ckpts=1))
