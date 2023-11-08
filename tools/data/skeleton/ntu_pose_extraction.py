@@ -197,7 +197,7 @@ def bboxes2bbox(bbox, num_frame):
 
 def ntu_det_postproc(vid, det_results):
     det_results = [removedup(x) for x in det_results]
-    label = int(vid.split('/')[-1].split('A')[1][:3])
+    label = osp.basename(vid).split('_')[1].split('.')[0]
     mpaction = list(range(50, 61)) + list(range(106, 121))
     n_person = 2 if label in mpaction else 1
     is_easy, bboxes = is_easy_example(det_results, n_person)
@@ -265,8 +265,8 @@ def ntu_pose_extraction(vid, skip_postproc=False):
         device=args.device,
         with_score=True)
 
-    # if not skip_postproc:
-    #     det_results = ntu_det_postproc(vid, det_results)
+    if not skip_postproc:
+        det_results = ntu_det_postproc(vid, det_results)
 
     anno = dict()
 
