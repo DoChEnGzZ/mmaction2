@@ -25,7 +25,7 @@ model = dict(
         average_clips='prob'))
 
 dataset_type = 'PoseDataset'
-ann_file = 'data/skeleton/ntu60_2d.pkl'
+ann_file = 'data/train.pkl'
 left_kp = [1, 3, 5, 7, 9, 11, 13, 15]
 right_kp = [2, 4, 6, 8, 10, 12, 14, 16]
 train_pipeline = [
@@ -81,7 +81,7 @@ test_pipeline = [
 ]
 
 train_dataloader = dict(
-    batch_size=16,
+    batch_size=8,
     num_workers=8,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=True),
@@ -94,7 +94,7 @@ train_dataloader = dict(
             split='xsub_train',
             pipeline=train_pipeline)))
 val_dataloader = dict(
-    batch_size=16,
+    batch_size=8,
     num_workers=8,
     persistent_workers=True,
     sampler=dict(type='DefaultSampler', shuffle=False),
@@ -120,7 +120,7 @@ val_evaluator = [dict(type='AccMetric')]
 test_evaluator = val_evaluator
 
 train_cfg = dict(
-    type='EpochBasedTrainLoop', max_epochs=24, val_begin=1, val_interval=1)
+    type='EpochBasedTrainLoop', max_epochs=8, val_begin=1, val_interval=1)
 val_cfg = dict(type='ValLoop')
 test_cfg = dict(type='TestLoop')
 
@@ -136,3 +136,7 @@ param_scheduler = [
 optim_wrapper = dict(
     optimizer=dict(type='SGD', lr=0.2, momentum=0.9, weight_decay=0.0003),
     clip_grad=dict(max_norm=40, norm_type=2))
+
+# 每轮都保存权重，并且只保留最新的权重
+default_hooks = dict(
+    checkpoint=dict(type='CheckpointHook', interval=1, max_keep_ckpts=1))
