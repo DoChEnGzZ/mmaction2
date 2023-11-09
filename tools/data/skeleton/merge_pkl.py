@@ -1,14 +1,14 @@
 '''
 Author: dochengzz
 Date: 2023-11-07 18:30:41
-LastEditTime: 2023-11-09 16:33:05
+LastEditTime: 2023-11-09 21:27:21
 LastEditors: dochengzz
 Description: 
 FilePath: /mmaction2/tools/data/skeleton/merge_pkl.py
 '''
 import os.path as osp
 import os
-import mmengine
+import pickle
 result = dict()
 result['split'] = dict()
 result['split']['train'] = []
@@ -17,11 +17,16 @@ annotations = []
 path = './'
 for d in os.listdir(path):
     if d.endswith('.pkl'):
+        print(d)
         with open(osp.join(path, d), 'rb') as f:
-            content = mmengine.load(f)
-            result['split']['train'].append(content['frame_dir'])  
-            result['split']['val'].append(content['frame_dir'])
+            content = pickle.load(f)
+            # val前缀为S003
+            if d[:4] == 'S003':
+                result['split']['val'].append(content['frame_dir'])  
+            else:    
+                result['split']['train'].append(content['frame_dir'])
             annotations.append(content)
+            i=i+1
 result['annotations'] = annotations       
 with open('my_dataset.pkl', 'wb') as out:
-    mmengine.dump(result, out)
+    pickle.dump(result, out)
