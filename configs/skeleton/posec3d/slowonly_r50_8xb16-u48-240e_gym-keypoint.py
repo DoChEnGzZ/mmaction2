@@ -26,7 +26,7 @@ model = dict(
         average_clips='prob'))
 
 dataset_type = 'PoseDataset'
-ann_file = 'data/S000C001P001R001A000.pkl'
+ann_file = 'data/my_dataset.pkl'
 left_kp = [1, 3, 5, 7, 9, 11, 13, 15]
 right_kp = [2, 4, 6, 8, 10, 12, 14, 16]
 train_pipeline = [
@@ -121,7 +121,7 @@ val_evaluator = dict(type='AccMetric')
 test_evaluator = val_evaluator
 
 train_cfg = dict(
-    type='EpochBasedTrainLoop', max_epochs=4, val_begin=1, val_interval=1)
+    type='EpochBasedTrainLoop', max_epochs=128, val_begin=1, val_interval=1)
 val_cfg = dict(type='ValLoop')
 test_cfg = dict(type='TestLoop')
 

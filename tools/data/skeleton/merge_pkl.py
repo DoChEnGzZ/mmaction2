@@ -1,7 +1,7 @@
 '''
 Author: dochengzz
 Date: 2023-11-07 18:30:41
-LastEditTime: 2023-11-09 21:27:21
+LastEditTime: 2023-11-09 21:57:05
 LastEditors: dochengzz
 Description: 
 FilePath: /mmaction2/tools/data/skeleton/merge_pkl.py
@@ -26,7 +26,6 @@ for d in os.listdir(path):
             else:    
                 result['split']['train'].append(content['frame_dir'])
             annotations.append(content)
-            i=i+1
 result['annotations'] = annotations       
 with open('my_dataset.pkl', 'wb') as out:
     pickle.dump(result, out)
