@@ -1,7 +1,7 @@
 '''
 Author: dochengzz
 Date: 2023-11-07 18:30:41
-LastEditTime: 2023-11-09 21:57:05
+LastEditTime: 2023-11-10 15:37:08
 LastEditors: dochengzz
 Description: 
 FilePath: /mmaction2/tools/data/skeleton/merge_pkl.py
@@ -21,7 +21,7 @@ for d in os.listdir(path):
         with open(osp.join(path, d), 'rb') as f:
             content = pickle.load(f)
             # val前缀为S003
-            if d[:4] == 'S003':
+            if d[:4] == 'S003' or d[:4] == 'S009':
                 result['split']['val'].append(content['frame_dir'])  
             else:    
                 result['split']['train'].append(content['frame_dir'])
